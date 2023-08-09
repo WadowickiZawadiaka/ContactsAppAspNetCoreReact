@@ -29,11 +29,27 @@ namespace ContactsApp.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task Delete(int id)
+        {
+            var contact = await _dbContext.Contacts.FindAsync(id);
+
+            if (contact == null)
+            {
+                throw new InvalidOperationException($"Contact with ID {id} not found.");
+            }
+
+            _dbContext.Contacts.Remove(contact);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Contact>> GetAll()
             => await _dbContext.Contacts.ToListAsync();
 
         public Task<Contact> GetByEncodedName(string encodedName)
             => _dbContext.Contacts.FirstAsync(c => c.EncodedName == encodedName);
+
+        public Task<Contact?> GetById(int id)
+            => _dbContext.Contacts.FirstOrDefaultAsync(c => c.Id == id);
 
         public Task<Contact?> GetByName(string name)
             => _dbContext.Contacts.FirstOrDefaultAsync(c => c.Email.ToLower() == name.ToLower());

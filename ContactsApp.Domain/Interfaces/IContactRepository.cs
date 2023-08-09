@@ -14,5 +14,7 @@ namespace ContactsApp.Domain.Interfaces
         Task<IEnumerable<Contact>> GetAll();
         Task<Contact> GetByEncodedName(string encodedName);
         Task Commit();
+        Task<Contact?> GetById(int id);
+        Task Delete(int id);
     }
 }

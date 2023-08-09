@@ -2,6 +2,7 @@
 using ContactsApp.Application.Contact.Queries.GetContactByEncodedName;
 using ContactsApp.Application.Contacts.Commands.CreateContact;
 using ContactsApp.Application.Contacts.Commands.EditContact;
+using ContactsApp.Application.Contacts.Commands.RemoveContact;
 using ContactsApp.Application.Contacts.Queries.GetAllContacts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +22,7 @@ namespace ContactsApp.API.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetAllContacts")]
+        [HttpGet("GetAll",Name = "GetAllContacts")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllContactsAsync()
         {
@@ -30,10 +31,10 @@ namespace ContactsApp.API.Controllers
             return Ok(contacts);
         }
 
-        [HttpPost(Name = "CreateContact")]
+        [HttpPost("Create", Name = "CreateContact")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateContactAsync(CreateContactCommand command)
+        public async Task<IActionResult> CreateContactAsync([FromBody] CreateContactCommand command)
         {
             if (!ModelState.IsValid) 
             {
@@ -87,6 +88,25 @@ namespace ContactsApp.API.Controllers
                 await _mediator.Send(command);
 
                 return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpDelete("{contactId}/Delete", Name = "DeleteContactById")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteContactByIdAsync(int contactId)
+        {
+            try
+            {
+                var command = new RemoveContactCommand { ContactId = contactId };
+                await _mediator.Send(command);
+
+                return NoContent();
             }
             catch (Exception ex)
             {

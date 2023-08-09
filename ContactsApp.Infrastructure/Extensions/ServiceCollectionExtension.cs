@@ -2,6 +2,8 @@
 using ContactsApp.Infrastructure.Persistence;
 using ContactsApp.Infrastructure.Repositories;
 using ContactsApp.Infrastructure.Seeders;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +21,9 @@ namespace ContactsApp.Infrastructure.Extensions
         { 
             services.AddDbContext<ContactDbContext>(options => options.UseSqlServer(
                 configuration.GetConnectionString("Contacts")));
+
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<ContactDbContext>();
 
             services.AddScoped<ContactSeeder>();
 

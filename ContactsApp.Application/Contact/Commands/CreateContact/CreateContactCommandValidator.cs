@@ -50,25 +50,6 @@ namespace ContactsApp.Application.Contact.Commands.CreateContact
                 .Length(8, 12)
                 .When(contact => !string.IsNullOrEmpty(contact.Phone));
 
-            RuleFor(contact => contact.DateOfBirth)
-                .NotNull();
-
-            RuleFor(contact => contact.Category)
-                .NotEmpty()
-                .Must((contact, category) =>
-                {
-                    if (category == "służbowy")
-                    {
-                        return !string.IsNullOrEmpty(contact.Subcategory);
-                    }
-                    else if (category == "inny")
-                    {
-                        return !string.IsNullOrEmpty(contact.Subcategory);
-                    }
-                    return true;
-                })
-                .WithMessage("Subcategory must be provided for 'służbowy' or 'inny' category.");
-
             RuleFor(contact => contact.EncodedName)
                 .NotNull();
         }
