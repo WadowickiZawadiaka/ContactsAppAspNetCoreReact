@@ -16,5 +16,6 @@ namespace ContactsApp.Domain.Interfaces
         Task Commit();
         Task<Contact?> GetById(int id);
         Task Delete(int id);
+        Task DeleteByEncodedName(string encodedName);
     }
 }

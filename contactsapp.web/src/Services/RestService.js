@@ -35,8 +35,18 @@ const RestService = {
 
   editContact: async (encodedName) => {
     try {
-        const response = await axios.put(`${apiBaseUrl}api/Contact/${encodedName}/Edit`);
-        return response.data;
+      const response = await axios.put(`${apiBaseUrl}api/Contact/${encodedName}/Edit`);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  },
+
+  deleteContact: async (encodedName) => {
+    try {
+      const response = await axios.delete(`${apiBaseUrl}api/Contact/${encodedName}/Delete`);
+      return response.data;
     } catch (error) {
       console.error(error);
       throw error;

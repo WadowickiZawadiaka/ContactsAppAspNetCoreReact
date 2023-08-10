@@ -11,7 +11,8 @@ namespace ContactsApp.Application.Contacts.Commands.RemoveContact
     {
         public RemoveContactCommandValidator()
         {
-            RuleFor(x => x.ContactId).GreaterThan(0).WithMessage("Invalid contact ID.");
+            RuleFor(x => x.EncodedName)
+                .NotEmpty().WithMessage("Encoded name is required.");
         }
     }
 }

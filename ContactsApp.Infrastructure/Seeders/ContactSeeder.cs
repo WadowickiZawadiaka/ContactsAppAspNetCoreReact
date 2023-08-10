@@ -30,7 +30,7 @@ namespace ContactsApp.Infrastructure.Seeders
                         Password = "haslo123",
                         ContactDetails = new Domain.Models.ContactDetails()
                         {
-                            Category = "szef", //jeśli category == inny, to można wpisać z łapy subcategory
+                            Category = "szef", 
                             Subcategory = "podkategoria",
                             Phone = "123456789",
                             DateOfBirth = DateTime.Now,

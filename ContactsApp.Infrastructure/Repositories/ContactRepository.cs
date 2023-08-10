@@ -42,6 +42,19 @@ namespace ContactsApp.Infrastructure.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteByEncodedName(string encodedName)
+        {
+            var contact = await _dbContext.Contacts.FirstOrDefaultAsync(c => c.EncodedName == encodedName);
+
+            if (contact == null)
+            {
+                throw new InvalidOperationException($"Contact with EncodedName {encodedName} not found.");
+            }
+
+            _dbContext.Contacts.Remove(contact);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<Contact>> GetAll()
             => await _dbContext.Contacts.ToListAsync();
 

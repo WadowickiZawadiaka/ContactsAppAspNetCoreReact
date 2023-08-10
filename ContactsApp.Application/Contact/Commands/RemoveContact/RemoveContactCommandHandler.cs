@@ -20,7 +20,7 @@ namespace ContactsApp.Application.Contacts.Commands.RemoveContact
 
         public async Task Handle(RemoveContactCommand request, CancellationToken cancellationToken)
         {
-            var contactToRemove = await _contactRepository.GetById(request.ContactId);
+            var contactToRemove = await _contactRepository.GetByEncodedName(request.EncodedName);
 
             if (contactToRemove != null) 
             {

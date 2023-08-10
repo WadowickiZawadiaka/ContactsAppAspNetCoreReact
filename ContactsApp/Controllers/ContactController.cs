@@ -95,15 +95,15 @@ namespace ContactsApp.API.Controllers
             }
         }
 
-        [HttpDelete("{contactId}/Delete", Name = "DeleteContactById")]
+        [HttpDelete("{encodedName}/Delete", Name = "DeleteContactByEncodedName")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> DeleteContactByIdAsync(int contactId)
+        public async Task<IActionResult> DeleteContactByEncodedNameAsync(string encodedName)
         {
             try
             {
-                var command = new RemoveContactCommand { ContactId = contactId };
+                var command = new RemoveContactCommand { EncodedName = encodedName };
                 await _mediator.Send(command);
 
                 return NoContent();

@@ -30,8 +30,8 @@ function ContactList({ searchText }) {
 
   const handleDelete = async (encodedName) => {
     try {
-      //TODO: Add logic to call RestService to delete the contact and update the contacts state to reflect the changes
-      console.log(`Deleting contact with encodedName: ${encodedName}`);
+      await RestService.deleteContact(encodedName);
+      setContacts(prevContacts => prevContacts.filter(contact => contact.encodedName !== encodedName));
     } catch (error) {
       console.error(error);
     }

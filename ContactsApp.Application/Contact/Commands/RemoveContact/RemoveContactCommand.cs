@@ -9,6 +9,6 @@ namespace ContactsApp.Application.Contacts.Commands.RemoveContact
 {
     public class RemoveContactCommand : IRequest
     {
-        public int ContactId { get; set; }
+        public string EncodedName { get; set; } = default!;
     }
 }

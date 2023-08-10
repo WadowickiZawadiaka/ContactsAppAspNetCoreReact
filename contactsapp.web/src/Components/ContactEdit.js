@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import RestService from '../Services/RestService'
 
 function ContactEdit() {
-    return (
-        <></>
-      );
-    }
-    
+  return (
+    <>
+      
+    </>
+  );
+}
+
 export default ContactEdit;
-    
